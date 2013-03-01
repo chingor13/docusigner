@@ -9,15 +9,31 @@ module Docusigner
     # allow you to attach documents
     include Docusigner::Multipart::Resource
 
-    def self.token=(token)
-      connection.send(:default_header)['Authorization'] = "Bearer #{token}"
-    end
-    def self.authorization=(options = {})
-      if options[:token]
-        self.token = options[:token]
-      else
-        header = %(<DocuSignCredentials><Username>%{name}</Username><Password>%{password}</Password><IntegratorKey>%{integrator_key}</IntegratorKey></DocuSignCredentials>)
-        connection.send(:default_header)['X-DocuSign-Authentication'] = header % options
+    class << self
+      # we want to inherit headers for authentication
+      def headers
+        @headers ||= begin
+          superclass.respond_to?(:headers) ? superclass.headers : {}
+        end
+      end
+
+      def connection(refresh = false)
+        if defined?(@connection) || self == Docusigner::Base
+          @connection = Docusigner::Connection.new(site, format) if refresh || @connection.nil? || !@connection.is_a?(Docusigner::Connection)
+          @connection.timeout = timeout if timeout
+          @connection.ssl_options = ssl_options if ssl_options
+          @connection
+        else
+          superclass.connection
+        end
+      end
+
+      def token=(token)
+        headers['Authorization'] = "Bearer #{token}"
+      end
+
+      def authorization=(options = {})
+        connection.authorization = options
       end
     end
 

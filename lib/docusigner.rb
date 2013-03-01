@@ -1,5 +1,10 @@
 require 'docusigner/base'
 module Docusigner
+  # extensions
+  autoload :Connection, "docusigner/connection"
+  autoload :Multipart, "docusigner/multipart"
+
+  # REST models
   autoload :Account, "docusigner/account"
   autoload :BillingPlan, "docusigner/billing_plan"
   autoload :Brand, "docusigner/brand"
@@ -12,7 +17,6 @@ module Docusigner
   autoload :Tab, "docusigner/tab"
   autoload :Template, "docusigner/template"
   autoload :User, "docusigner/user"
-  autoload :Multipart, "docusigner/multipart"
 
   class << self
     def connection
@@ -24,4 +28,3 @@ module Docusigner
     end
   end
 end
-

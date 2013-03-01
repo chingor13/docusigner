@@ -1,4 +1,5 @@
 require 'net/http/post/multipart'
+require 'active_support/all'
 
 # this class leverages some parts of the multipart-post gem,
 #   but we need to change some headers
@@ -116,33 +117,6 @@ module Docusigner
       end
     end
 
-    module ConnectionExtension
-      def self.included(klass)
-        klass.send(:alias_method_chain, :post, :multipart)
-        klass.send(:alias_method_chain, :put, :multipart)
-      end
-
-      def post_with_multipart(path, body = '', headers = {})
-        if body.is_a?(Array)
-          with_auth do
-            req = Docusigner::Multipart::Post.new(path, body, build_request_headers(headers, :post, self.site.merge(path)))
-            handle_response(http.request(req))
-          end
-        else
-          post_without_multipart(path, body, headers)
-        end
-      end
-
-      def put_with_multipart(path, body = '', headers = {})
-        if body.is_a?(Array)
-          req = Docusigner::Multipart::Put.new(path, body, headers)
-          with_auth { request(:request, req, build_request_headers(headers, :put, self.site.merge(path))) }
-        else
-          post_without_multipart(path, body, headers)
-        end
-      end
-    end
   end
 end
 
-ActiveResource::Connection.send(:include, Docusigner::Multipart::ConnectionExtension)
