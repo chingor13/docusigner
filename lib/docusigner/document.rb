@@ -1,3 +1,5 @@
-class Docusigner::Document < Docusigner::Base
-  belongs_to :envelope
+module Docusigner
+  class Document < Docusigner::Base
+    belongs_to :envelope
+  end
 end

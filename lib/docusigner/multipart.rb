@@ -22,6 +22,8 @@ module Docusigner
       def self.build(boundary, value, opts = {})
         if value.is_a?(Array)
           self.build(boundary, value.first, opts.merge(value.last))
+        elsif value.is_a?(String)
+          DataPart.new(boundary, value, opts)
         elsif value.is_a?(UploadIO)
           DocumentPart.new(boundary, value, opts)
         else
@@ -56,19 +58,20 @@ module Docusigner
 
       class DocumentPart
         attr_reader :length
-        def initialize(boundary, io, opts = {})
-          @io = io
-          head = build(boundary, io, opts)
+        def initialize(boundary, upload_io, opts = {})
+          @upload_io = upload_io
+          head = build(boundary, @upload_io, opts)
           foot = "\r\n"
-          @output_io = CompositeReadIO.new(StringIO.new(head), io, StringIO.new(foot))
+          @output_io = CompositeReadIO.new(StringIO.new(head), @upload_io.io, StringIO.new(foot))
           @length = head.length + file_length + foot.length
         end
         def to_io
           @output_io
         end
         protected
+
         def file_length
-          @file_length ||= @io.respond_to?(:length) ? @io.length : File.size(@io.local_path)
+          @file_length ||= @upload_io.respond_to?(:length) ? @upload_io.length : File.size(@upload_io.local_path)
         end
         
         def build(boundary, io, opts = {})
@@ -99,7 +102,11 @@ module Docusigner
       end
 
       def encode
-        [super, *documents]
+        if documents.present?
+          [super, *documents]
+        else
+          super
+        end
       end
 
       protected
@@ -119,10 +126,7 @@ module Docusigner
         if body.is_a?(Array)
           with_auth do
             req = Docusigner::Multipart::Post.new(path, body, build_request_headers(headers, :post, self.site.merge(path)))
-resp = http.request(req)
-pp resp.body
-handle_response(resp)
-#            handle_response(http.request(req))
+            handle_response(http.request(req))
           end
         else
           post_without_multipart(path, body, headers)
