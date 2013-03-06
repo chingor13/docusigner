@@ -7,6 +7,9 @@ You can read more about DocuSign's REST API:
 * [Developer Center](http://www.docusign.com/developers-center)
 * [API Documentation (PDF)](http://www.docusign.com/sites/default/files/REST_API_Guide_v2.pdf)
 
+*SPECIAL NOTE*: I do not yet have access to the production server, so please consider this a beta.  It has only been tested against the demo server and against the expected responses provided by the above API guide.
+
+
 ## Requirements
 
 * `reactive_resource`
