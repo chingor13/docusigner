@@ -1,3 +1,5 @@
-class Docusigner::Tab < Docusigner::Base
-  belongs_to :envelope
+module Docusigner
+  class Tab < Docusigner::Base
+    belongs_to :recipient
+  end
 end

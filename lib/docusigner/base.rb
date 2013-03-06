@@ -13,7 +13,7 @@ module Docusigner
       # we want to inherit headers for authentication
       def headers
         @headers ||= begin
-          superclass.respond_to?(:headers) ? superclass.headers : {}
+          superclass.respond_to?(:headers) ? superclass.headers.dup : {}
         end
       end
 
@@ -33,7 +33,7 @@ module Docusigner
       end
 
       def authorization=(options = {})
-        connection.authorization = options
+        headers['X-DocuSign-Authentication'] = "<DocuSignCredentials><Username>%{username}</Username><Password>%{password}</Password><IntegratorKey>%{integrator_key}</IntegratorKey></DocuSignCredentials>" % options
       end
     end
 

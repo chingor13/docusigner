@@ -6,6 +6,7 @@ module Docusigner
     has_one :settings, :class_name => "Docusigner::Settings"
 
     has_many :brands
+    has_many :custom_fields
 
     # define this manually because the index action requires a from_date
     def envelopes(from_date, options = {})

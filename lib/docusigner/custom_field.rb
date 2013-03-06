@@ -1,5 +1,5 @@
 module Docusigner
-  class Brand < Docusigner::Base
+  class CustomField < Docusigner::Base
     belongs_to :account
   end
 end

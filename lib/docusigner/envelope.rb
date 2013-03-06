@@ -20,7 +20,6 @@ module Docusigner
 
     has_many :documents
     has_many :recipients
-    has_many :tabs
 
     def id
       attributes["envelopeId"]
@@ -39,6 +38,16 @@ module Docusigner
 
     def recipient_url(params = {})
       resp = post("views/recipient", prefix_options, params.to_json)
+      self.class.format.decode(resp.body)
+    end
+
+    def sender_url(params = {})
+      resp = post("views/sender", prefix_options, params.to_json)
+      self.class.format.decode(resp.body)
+    end
+
+    def correct_url(params = {})
+      resp = post("views/correct", prefix_options, params.to_json)
       self.class.format.decode(resp.body)
     end
 

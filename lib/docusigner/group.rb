@@ -1,4 +1,5 @@
-class Docusigner::Group < Docusigner::Base
-  belongs_to :account
-#  has_many :users
+module Docusigner
+  class Group < Docusigner::Base
+    belongs_to :account
+  end
 end

@@ -1,6 +1,8 @@
-class Docusigner::BillingPlan < Docusigner::Base
-  singleton
+module Docusigner
+  class BillingPlan < Docusigner::Base
+    singleton
 
-  belongs_to :account
+    belongs_to :account
+  end
 end
 

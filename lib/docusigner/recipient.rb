@@ -12,6 +12,7 @@ module Docusigner
     end
 
     belongs_to :envelope
+    has_many :tabs
 
     class << self
       private

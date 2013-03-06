@@ -8,6 +8,7 @@ module Docusigner
   autoload :Account, "docusigner/account"
   autoload :BillingPlan, "docusigner/billing_plan"
   autoload :Brand, "docusigner/brand"
+  autoload :CustomField, "docusigner/custom_field"
   autoload :Document, "docusigner/document"
   autoload :Envelope, "docusigner/envelope"
   autoload :Folder, "docusigner/folder"
