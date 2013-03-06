@@ -35,6 +35,43 @@ module Docusigner
       def authorization=(options = {})
         headers['X-DocuSign-Authentication'] = "<DocuSignCredentials><Username>%{username}</Username><Password>%{password}</Password><IntegratorKey>%{integrator_key}</IntegratorKey></DocuSignCredentials>" % options
       end
+
+      private
+
+      # we want to automatically set the foreign keys if they are provided
+      def instantiate_record(record, prefix_options = {})
+        super(record, prefix_options).tap do |r|
+          prefix_options.each do |k, v|
+            if r.respond_to?("#{k}=")
+              r.send("#{k}=", v)
+            end
+          end
+        end
+      end
+
+      # some of DocuSign's responses contain metadata about the response (e.g. number of records returned)
+      def instantiate_collection(data, prefix_options = {})
+        if data.is_a?(Hash)
+          # if the data has the collection name as a root element, use that to build the records
+          if data.has_key?(collection_name)
+            super(data[collection_name], prefix_options) 
+          else
+            instantiate_flattened_collection(data, prefix_options)
+          end
+        else
+          super(data, prefix_options)
+        end
+      end
+
+      def instantiate_flattened_collection(data, prefix_options)
+        flattened = []
+        data.each do |type, array|
+          array.each do |obj|
+            flattened << instantiate_record(obj.merge(:type => type), prefix_options)
+          end if array.is_a?(Array)
+        end
+        flattened
+      end
     end
 
     # the json should skip the root element

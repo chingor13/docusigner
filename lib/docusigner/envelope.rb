@@ -51,18 +51,5 @@ module Docusigner
       self.class.format.decode(resp.body)
     end
 
-    class << self
-      private
-
-      def instantiate_collection(collection, prefix_options = {})
-        super(collection["envelopes"], prefix_options)
-      end
-
-      def instantiate_record(record, prefix_options = {})
-        super(record, prefix_options).tap do |r|
-          r.account_id = prefix_options[:account_id]
-        end
-      end
-    end
   end
 end

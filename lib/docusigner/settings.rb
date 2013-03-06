@@ -4,6 +4,11 @@ module Docusigner
 
     belongs_to :account
 
+    def [](setting)
+      as = accountSettings.detect{|as| as.name == setting}
+      as ? as.attributes["value"] : nil
+    end
+
     class << self
       def instantiate_record(record, prefix_options)
         super({

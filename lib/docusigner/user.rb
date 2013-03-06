@@ -25,13 +25,5 @@ module Docusigner
       end
       super(attributes, remove_root)
     end
-
-    class << self
-      private
-
-      def instantiate_record(record, prefix_options = {})
-        super(record, prefix_options)
-      end
-    end
   end
 end
