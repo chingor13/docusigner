@@ -13,19 +13,13 @@ module Docusigner
   autoload :Envelope, "docusigner/envelope"
   autoload :Folder, "docusigner/folder"
   autoload :Group, "docusigner/group"
+  autoload :LoginInformation, "docusigner/login_information"
   autoload :Recipient, "docusigner/recipient"
   autoload :Settings, "docusigner/settings"
   autoload :Tab, "docusigner/tab"
   autoload :Template, "docusigner/template"
   autoload :User, "docusigner/user"
 
-  class << self
-    def connection
-      Docusigner::Base.connection
-    end
-
-    def access_token(username, password, integrator_key)
-      connection.post
-    end
-  end
+  # other models
+  autoload :Oauth2, "docusigner/oauth2"
 end
