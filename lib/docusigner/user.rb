@@ -1,6 +1,7 @@
 module Docusigner
   class User < Docusigner::Base
     belongs_to :account
+    has_one :profile
 
     # DocuSign does not permit this endpoint
     def update

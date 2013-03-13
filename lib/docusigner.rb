@@ -14,6 +14,8 @@ module Docusigner
   autoload :Folder, "docusigner/folder"
   autoload :Group, "docusigner/group"
   autoload :LoginInformation, "docusigner/login_information"
+  autoload :Profile, "docusigner/profile"
+  autoload :ProfileImage, "docusigner/profile_image"
   autoload :Recipient, "docusigner/recipient"
   autoload :Settings, "docusigner/settings"
   autoload :Tab, "docusigner/tab"

@@ -46,6 +46,8 @@ module Docusigner
               r.send("#{k}=", v)
             end
           end
+          # set the id field from [element_name]Id (e.g. userId)
+          r.id = r.send("#{element_name}Id") if r.respond_to?("#{element_name}Id")
         end
       end
 
