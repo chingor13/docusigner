@@ -51,5 +51,10 @@ module Docusigner
       self.class.format.decode(resp.body)
     end
 
+    # fetch documents - don't use helper b/c we don't want to try to parse as json
+    def documents_combined(params = {})
+      connection.get(custom_method_element_url("documents/combined", prefix_options.merge(params)), self.class.headers).body
+    end
+
   end
 end
