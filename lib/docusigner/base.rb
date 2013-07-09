@@ -36,6 +36,15 @@ module Docusigner
         headers['X-DocuSign-Authentication'] = "<DocuSignCredentials><Username>%{username}</Username><Password>%{password}</Password><IntegratorKey>%{integrator_key}</IntegratorKey></DocuSignCredentials>" % options
       end
 
+      def act_as_user(user, &block)
+        old_header = headers.delete('X-DocuSign-Act-As-User')
+        headers['X-DocuSign-Act-As-User'] = user
+        yield
+        unless old_header.nil?
+          headers['X-DocuSign-Act-As-User'] = old_header
+        end
+      end
+
       private
 
       # we want to automatically set the foreign keys if they are provided
