@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = "docusigner"
-  s.version = "0.0.4"
+  s.version = "0.0.5"
   s.description = "Unofficial gem for accessing the DocuSign REST API"
   s.summary = "Unofficial gem for accessing the DocuSign REST API"
   s.add_dependency "reactive_resource", ">= 0.7.3"
