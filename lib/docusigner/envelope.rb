@@ -16,13 +16,18 @@ module Docusigner
       CORRECT   = "correct"
     end
 
+    self.primary_key = "envelopeId"
+
     belongs_to :account
 
     has_many :documents
     has_many :recipients
 
-    def id
-      attributes["envelopeId"]
+    class << self
+      def recipient_url(id, prefix_options = {}, params = {})
+        resp = post("#{id}/views/recipient", prefix_options, params.to_json)
+        format.decode(resp.body)
+      end
     end
 
     def send!
