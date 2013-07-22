@@ -109,6 +109,27 @@ class Docusigner::EnvelopeTest < Test::Unit::TestCase
         :clientUserId => 333,
         :recipientId => 1
       })
+
+      assert_requested(:post, "https://demo.docusign.net/restapi/v2/accounts/1234-asdf/envelopes/qwer-7890/views/recipient.json")
+      assert_equal("http://localhost/Member/StartInSession.aspx?t=d1cf42f2-30b6-499b-ab54-058fbf438103", url)
+    end
+
+    should "be able to get recipient view url using the class method" do
+      stub_request(:post, "https://demo.docusign.net/restapi/v2/accounts/1234-asdf/envelopes/qwer-7890/views/recipient.json")
+        .to_return(:body => {
+          "url" => "http://localhost/Member/StartInSession.aspx?t=d1cf42f2-30b6-499b-ab54-058fbf438103"
+        }.to_json)
+
+      params = {
+        :authenticationMethod => "email",
+        :email => "mike.rosey@docusign.com",
+        :returnUrl => "http://www.docusign.com",
+        :userName => "Mike Rosey",
+        :clientUserId => 333,
+        :recipientId => 1
+      }
+
+      url = Docusigner::Envelope.recipient_url(@envelope.id, @envelope.prefix_options, params)
       assert_requested(:post, "https://demo.docusign.net/restapi/v2/accounts/1234-asdf/envelopes/qwer-7890/views/recipient.json")
       assert_equal("http://localhost/Member/StartInSession.aspx?t=d1cf42f2-30b6-499b-ab54-058fbf438103", url)
     end
