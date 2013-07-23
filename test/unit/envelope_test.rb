@@ -157,6 +157,20 @@ class Docusigner::EnvelopeTest < Test::Unit::TestCase
       assert_requested(:post, "https://demo.docusign.net/restapi/v2/accounts/1234-asdf/envelopes/qwer-7890/views/correct.json")
       assert_equal("http://localhost/someurl", url)
     end
+
+    should "be able to get the combined pdf" do
+      stub_request(:get, "https://demo.docusign.net/restapi/v2/accounts/1234-asdf/envelopes/qwer-7890/documents/combined.json")
+        .to_return(:body => "pdf goes here")
+      assert_equal("pdf goes here", @envelope.documents_combined)
+      assert_requested(:get, "https://demo.docusign.net/restapi/v2/accounts/1234-asdf/envelopes/qwer-7890/documents/combined.json")
+    end
+
+    should "be able to get the combined pdf using class method" do
+      stub_request(:get, "https://demo.docusign.net/restapi/v2/accounts/1234-asdf/envelopes/qwer-7890/documents/combined.json")
+        .to_return(:body => "pdf goes here")
+      assert_equal("pdf goes here", Docusigner::Envelope.documents_combined(@envelope.id, @envelope.prefix_options))
+      assert_requested(:get, "https://demo.docusign.net/restapi/v2/accounts/1234-asdf/envelopes/qwer-7890/documents/combined.json")
+    end
   end
 
 end
