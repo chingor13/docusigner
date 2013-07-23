@@ -28,6 +28,12 @@ module Docusigner
         resp = post("#{id}/views/recipient", prefix_options, params.to_json)
         format.decode(resp.body)
       end
+
+      # fetch documents - don't use helper b/c we don't want to try to parse as json
+      def documents_combined(id, prefix_options = {})
+        connection.get(custom_method_collection_url("#{id}/documents/combined", prefix_options), headers).body
+      end
+
     end
 
     def send!
