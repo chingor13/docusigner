@@ -21,6 +21,7 @@ module Docusigner
   autoload :Tab, "docusigner/tab"
   autoload :Template, "docusigner/template"
   autoload :User, "docusigner/user"
+  autoload :UserSettings, "docusigner/user_settings"
 
   # other models
   autoload :Oauth2, "docusigner/oauth2"

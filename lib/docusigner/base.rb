@@ -40,7 +40,9 @@ module Docusigner
         old_header = headers.delete('X-DocuSign-Act-As-User')
         headers['X-DocuSign-Act-As-User'] = user
         yield
-        unless old_header.nil?
+        if old_header.nil?
+          headers.delete('X-DocuSign-Act-As-User')
+        else
           headers['X-DocuSign-Act-As-User'] = old_header
         end
       end

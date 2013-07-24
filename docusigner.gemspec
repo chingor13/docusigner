@@ -12,6 +12,7 @@ Gem::Specification.new do |s|
   s.author = "Jeff Ching"
   s.email = "jeff@chingr.com"
   s.homepage = "http://github.com/chingor13/docusigner"
+  s.license = "MIT"
 
   s.files = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
