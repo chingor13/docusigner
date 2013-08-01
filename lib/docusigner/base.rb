@@ -1,9 +1,10 @@
 require 'reactive_resource'
 require 'docusigner/multipart'
+require 'docusigner/format'
 module Docusigner
   class Base < ReactiveResource::Base
     self.site = "https://demo.docusign.net/restapi/v2"
-    self.format = :json
+    self.format = Docusigner::Format
     self.include_root_in_json = false
 
     # allow you to attach documents
