@@ -2,6 +2,9 @@ module Docusigner
   class Oauth2 < Docusigner::Base
     singleton
 
+    # for some reason, this endpoint will 404 if you include a format in the url
+    self.format = Docusigner::NoExtensionJsonFormat
+
     class << self
       def token(username, password, integrator_key)
         @headers = {

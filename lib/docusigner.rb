@@ -25,4 +25,5 @@ module Docusigner
 
   # other models
   autoload :Oauth2, "docusigner/oauth2"
+  autoload :NoExtensionJsonFormat, "docusigner/no_extension_json_format"
 end

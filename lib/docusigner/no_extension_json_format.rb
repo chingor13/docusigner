@@ -1,5 +1,5 @@
 module Docusigner
-  module Format
+  module NoExtensionJsonFormat
     extend ActiveResource::Formats::JsonFormat
 
     def self.extension
