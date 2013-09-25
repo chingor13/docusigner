@@ -21,11 +21,11 @@ module Docusigner
       json["newUsers"].first["userId"]
     end
 
-    def load(attributes, remove_root = false)
-      if attributes.is_a?(Array)
-        attributes = attributes.first
+    def load(*attrs)
+      if attrs.first.is_a?(Array)
+        attrs[0] = attrs.first.first
       end
-      super(attributes, remove_root)
+      super(*attrs)
     end
   end
 end
