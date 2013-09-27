@@ -11,8 +11,9 @@ module Docusigner
       { "userSettings" => user_settings.map(&:as_json) }
     end
 
-    def load(attributes, remove_root = false)
-      super({:user_settings => attributes}, remove_root)
+    def load(*attrs)
+      attrs[0] = {:user_settings => attrs[0]}
+      super(*attrs)
     end
 
     def set(key, value)
