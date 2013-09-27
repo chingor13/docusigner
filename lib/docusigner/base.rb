@@ -92,6 +92,10 @@ module Docusigner
       as_json.to_json
     end
 
+    def to_key
+      Array(super)
+    end
+
     protected
 
     # we want any generated resources for generated models to extend from this base class
