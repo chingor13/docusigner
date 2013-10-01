@@ -1,4 +1,3 @@
-require 'docusigner/base'
 module Docusigner
   # extensions
   autoload :Connection, "docusigner/connection"
@@ -25,5 +24,7 @@ module Docusigner
 
   # other models
   autoload :Oauth2, "docusigner/oauth2"
+  autoload :WithRootJsonFormat, "docusigner/with_root_json_format"
   autoload :NoExtensionJsonFormat, "docusigner/no_extension_json_format"
 end
+require 'docusigner/base'

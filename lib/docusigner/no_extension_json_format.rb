@@ -5,5 +5,9 @@ module Docusigner
     def self.extension
       ""
     end
+
+    def self.decode(data)
+      super(data)
+    end
   end
 end
